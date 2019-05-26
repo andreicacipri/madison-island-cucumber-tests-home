@@ -32,11 +32,18 @@ public class ElectronicsBody {
     }
 
     public  int getNumberOfElementsInBlackColor(WebDriver driver) {
-        String numberOfElementsString = driver.findElement(By.xpath("//dd[@class='even']//ol[@class='configurable-swatch-list']//span[.='(2)']")).getText();
+        String numberOfElementsString = driver.findElement(By.xpath("//dd[@class='even']//ol[@class='configurable-swatch-list']//span[.='(8)']")).getText();
         numberOfElementsString = numberOfElementsString.replaceAll("\\D+","");
-        int numberOfElementsInteger = Integer.parseInt(numberOfElementsString);
-        return numberOfElementsInteger;
+        return  Integer.parseInt(numberOfElementsString);
     }
+
+
+    public  int getNumberOfElementsInCharcoalColor(WebDriver driver) {
+        String numberOfElementsCharcoalString = driver.findElement(By.xpath("//dd[@class='even']//ol[@class='configurable-swatch-list']//span[.='(2)']")).getText();
+        numberOfElementsCharcoalString = numberOfElementsCharcoalString.replaceAll("\\D+","");
+        return  Integer.parseInt(numberOfElementsCharcoalString);
+    }
+
 
     @FindBy(css = "h2.product-name >a")
     private List<WebElement> productNameContainers;

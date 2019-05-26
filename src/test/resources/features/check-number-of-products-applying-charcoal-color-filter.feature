@@ -3,5 +3,5 @@ Feature: Shop by electronics type
     Given I open the homepage
     And I move the mouse on Home&Decor and then on Electronics page and click
     And I click on color "Charcoal" filter
-    Then With color "Charcoal"filter are exactly"2"products
+    Then With Charcoal color filter are exactly 2 products
 

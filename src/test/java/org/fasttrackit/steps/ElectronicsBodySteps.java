@@ -7,7 +7,8 @@ import org.fasttrackit.pageobjects.ElectronicsBody;
 import org.openqa.selenium.support.PageFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThan;
 
 public class ElectronicsBodySteps extends TestBase {
 
@@ -16,16 +17,12 @@ public class ElectronicsBodySteps extends TestBase {
     @And("^I click on \"([^\"]*)\" electronics type filter$")
     public void iClickOnElectronicsType(String electronicsType) {
         electronicsBody.getElectronicsTypeNumberOfElements(driver, electronicsType);
+
+        int storedNumberOfElectronicsType = electronicsBody.getElectronicsTypeNumberOfElements(driver, electronicsType);
+        getStepVariables().put("storedNumberOfElectronicsType" ,storedNumberOfElectronicsType);
         electronicsBody.clickAccessoriesButton(driver, electronicsType);
     }
 
-
-    @Then("^With \"([^\"]*)\"filter are exactly\"([^\"]*)\"products$")
-    public void allProductsAreSortedByType(String electronicsType,int exactNumber) {
-        electronicsBody.getProductNames();
-        assertThat("The products are not sorted by right type. ", exactNumber+1,is(electronicsBody.getProductNames().size()));
-
-    }
 
     @And("^I click on \"([^\"]*)\"-\"([^\"]*)\" RON electronics price$")
     public void iClickOnElectronicsPrice(String selectedPrice, String lastPrice) {
@@ -59,16 +56,32 @@ public class ElectronicsBodySteps extends TestBase {
 
     @And("^I click on \"([^\"]*)\"-\"([^\"]*)\" price range$")
     public void iClickOnPriceRange(String selectedPrice, String lastPrice) {
+
+        int storedNumberOfPriceRangeType = electronicsBody.getNumberOfElementsInThatRange(driver, selectedPrice);
+        getStepVariables().put("storedNumberOfPriceRangeType" ,storedNumberOfPriceRangeType);
+
         electronicsBody.clickElectronicsSelectedPriceButton(driver, selectedPrice);
     }
 
     @And("^I click on \"([^\"]*)\" and above price range$")
     public void iClickOnAndAbovePriceRange(String selectedPrice) {
+
+        int storedNumberOfPriceRangeType = electronicsBody.getNumberOfElementsInThatRange(driver, selectedPrice);
+        getStepVariables().put("storedNumberOfPriceRangeType" ,storedNumberOfPriceRangeType);
+
         electronicsBody.clickElectronicsSelectedPriceButton(driver, selectedPrice);
     }
 
+    @And("^I click on \"([^\"]*)\" color filter$")
+    public void iClickOnBlackColorFilterElectronicsTypeFilter(String selectedColor) {
+        int storedNumberBlackColor = electronicsBody.getNumberOfElementsInBlackColor(driver);
+        getStepVariables().put("storedNumberOfProductsInBlackColor" ,storedNumberBlackColor);
+        electronicsBody.clickOnSelectedColor(driver, selectedColor);
+    }
     @And("^I click on color \"([^\"]*)\" filter$")
-    public void iClickOnColorFilterElectronicsTypeFilter(String selectedColor) {
+    public void iClickOnCharcoalColorFilterElectronicsTypeFilter(String selectedColor) {
+        int storedNumberCharcoalColor = electronicsBody.getNumberOfElementsInCharcoalColor(driver);
+        getStepVariables().put("storedNumberOfProductsInCharcoalColor", storedNumberCharcoalColor);
         electronicsBody.clickOnSelectedColor(driver, selectedColor);
     }
 

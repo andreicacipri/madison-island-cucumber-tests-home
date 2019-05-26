@@ -3,5 +3,5 @@ Feature: Shop by electronics type
     Given I open the homepage
     And I move the mouse on Home&Decor and then on Electronics page and click
     And I click on "400,00" and above price range
-    Then In the "400,00" and above price range are exactly "2" products
+    Then In the 400 and above price range are exactly 2 products
 
