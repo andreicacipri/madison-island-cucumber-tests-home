@@ -4,6 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import org.fasttrackit.TestBase;
 import org.fasttrackit.pageobjects.ElectronicsBody;
+import org.fasttrackit.pageobjects.HomePage;
 import org.openqa.selenium.support.PageFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.lessThan;
 public class ElectronicsBodySteps extends TestBase {
 
     private ElectronicsBody electronicsBody = PageFactory.initElements(driver, ElectronicsBody.class);
+    private HomePage mouseHover = PageFactory.initElements(driver, HomePage.class);
 
     @And("^I click on \"([^\"]*)\" electronics type filter$")
     public void iClickOnElectronicsType(String electronicsType) {
@@ -30,11 +32,17 @@ public class ElectronicsBodySteps extends TestBase {
     }
 
     @Then("^All products are in \"([^\"]*)\"-\"([^\"]*)\" range$")
-    public void allProductsAreSortedBySelectedPrice(String selectedPrice, double lastPrice) {
+    public void allProductsAreSortedBySelectedPrice(String selectedPrice, String lastPrice) {
         electronicsBody.getProductPrice();
         System.out.println(electronicsBody.getProductPrice());
+        selectedPrice = selectedPrice.replaceAll("\\D+",".");
+        double doubleSelectedPrice = Double.parseDouble(selectedPrice);
+
+        lastPrice = lastPrice.replaceAll("\\D+",".");
+        double doubleLastPrice = Double.parseDouble(lastPrice);
+
         for (int i = 0; i < electronicsBody.getProductPrice().size(); i++) {
-            assertThat("The products are not sorted by right price. ", electronicsBody.getProductPrice().get(i), lessThan(lastPrice + 1));
+            assertThat("The products are not sorted by right price.Some products are not in the price range.", electronicsBody.getProductPrice().get(i), lessThan(doubleLastPrice + 1));
         }
     }
 
@@ -47,12 +55,18 @@ public class ElectronicsBodySteps extends TestBase {
     public void allProductsAreInRONAndAboveRange(String selectedPrice) {
         electronicsBody.getProductPrice();
         System.out.println(electronicsBody.getProductPrice());
-        selectedPrice = selectedPrice.replaceAll("\\D+",".");
+        selectedPrice = selectedPrice.replaceAll("\\D+", ".");
         double doubleSelectedPrice = Double.parseDouble(selectedPrice);
-        for (int i = 0; i < electronicsBody.getProductPrice().size(); i++) {
-            assertThat("The products are not sorted by right price. ", electronicsBody.getProductPrice().get(i), greaterThanOrEqualTo(doubleSelectedPrice));
+        //String stringSpecialPrice = getStepVariables().get("storedDoubleSpecialPrice").toString();
+        //double storedDoubleSpecialPrice = Double.parseDouble(stringSpecialPrice);
+        //if (storedDoubleSpecialPrice < doubleSelectedPrice) {
+        //    assertThat("The products are not sorted by right price. ", storedDoubleSpecialPrice, greaterThanOrEqualTo(doubleSelectedPrice));
+        //} else {
+            for (int i = 0; i < electronicsBody.getProductPrice().size(); i++) {
+                assertThat("The products are not sorted by right price. ", electronicsBody.getProductPrice().get(i), greaterThanOrEqualTo(doubleSelectedPrice));
+            }
         }
-    }
+
 
     @And("^I click on \"([^\"]*)\"-\"([^\"]*)\" price range$")
     public void iClickOnPriceRange(String selectedPrice, String lastPrice) {
@@ -88,5 +102,19 @@ public class ElectronicsBodySteps extends TestBase {
     @And("^I delete one filter$")
     public void iDeleteOneFilter() {
 electronicsBody.clickOnDeleteOneFilter(driver);
+    }
+
+    @And("^I click on Click for price and take the actual price$")
+    public void iClickOnClickForPriceAndTakeTheActualPrice() {
+
+        mouseHover.clickMouseHoverClickForPrice(driver);
+
+        String specialPrice = electronicsBody.getTextOnSpecialPricePopUpFromThere(driver);
+        specialPrice = specialPrice.replaceAll("\\D+",".");
+        specialPrice =specialPrice.replaceFirst(".$","");
+        double doubleSpecialPrice = Double.parseDouble(specialPrice);
+        getStepVariables().put("storedDoubleSpecialPrice" ,doubleSpecialPrice);
+       // mouseHover.clickMouseHoverCloseClickForPrice(driver);
+
     }
 }

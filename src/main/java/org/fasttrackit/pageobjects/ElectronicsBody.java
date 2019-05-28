@@ -95,6 +95,19 @@ public class ElectronicsBody {
     public void clickOnSelectedColor(WebDriver driver,String selectedColor) {
         getSelectedColor(driver,selectedColor).click();
     }
+    public  WebElement getSpecialPricePopUp(WebDriver driver) {
+    return driver.findElement(By.xpath("//div[@class='price-box map-info']//a[@href='#']"));
+}
+    public void clickOnSpecialPricePopUp(WebDriver driver) {
+        getSpecialPricePopUp(driver).click();
+    }
+
+    public  WebElement getSpecialPricePopUpFromThere(WebDriver driver) {
+        return driver.findElement(By.xpath("//div[@class='price-box']//span[@class='regular-price']//span[@class='price']"));
+    }
+    public String getTextOnSpecialPricePopUpFromThere(WebDriver driver) {
+         return getSpecialPricePopUpFromThere(driver).getText();
+    }
     public  WebElement getDeleteOneFilter(WebDriver driver) {
         return driver.findElement(By.xpath("//div[@class='currently']//ol//li//a[contains(@href,'electronic_type')]"));
     }
@@ -102,4 +115,7 @@ public class ElectronicsBody {
         getDeleteOneFilter(driver).click();
     }
 
+
 }
+
+

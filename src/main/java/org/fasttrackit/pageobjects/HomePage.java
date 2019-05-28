@@ -27,4 +27,25 @@ public class HomePage {
     public void clickMouseHoverElectronics(WebDriver driver){
         getMouseHoverElectronics(driver).click();
     }
+
+    public  WebElement getMouseHoverClickForPrice(WebDriver driver) {
+        WebElement move = driver.findElement(By.xpath("//div[@class='price-box map-info']//a[@href='#']"));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(move).build().perform();
+        return move;
+    }
+    public void clickMouseHoverClickForPrice(WebDriver driver){
+        getMouseHoverClickForPrice(driver).click();
+    }
+
+    public  WebElement getMouseHoverCloseClickForPrice(WebDriver driver) {
+        WebElement move = driver.findElement(By.xpath("//div[@id='map-popup']//a[@href='#']"));
+        Actions builder = new Actions(driver);
+        builder.moveToElement(move).build().perform();
+        return move;
+    }
+    public void clickMouseHoverCloseClickForPrice(WebDriver driver){
+        getMouseHoverCloseClickForPrice(driver).click();
+    }
+
 }
